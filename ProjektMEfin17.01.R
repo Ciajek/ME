@@ -340,7 +340,7 @@ test.white3 = lm(ehat2 ~ air.pollution2 + gini.index2 + health.expenditure2 +
 summary(test.white3) 
 
 LM=N*summary(test.white3)$r.squared # statystyka testu mnoznika Lagrange
-pchisq(LM,15, lower.tail=FALSE)
+pchisq(LM,20, lower.tail=FALSE)
 
 #Test Whitea model 4
 
@@ -362,7 +362,7 @@ test.white4 = lm(ehat24 ~ lair.pollution2 + lgini.index2 + lhealth.expenditure2 
 summary(test.white4) 
 
 LM=N*summary(test.white4)$r.squared # statystyka testu mnoznika Lagrange
-pchisq(LM,15, lower.tail=FALSE)
+pchisq(LM,20, lower.tail=FALSE)
 
 
 
@@ -375,16 +375,8 @@ vif(model4)
 
 jarque.bera.test(model3$residuals)
 jarque.bera.test(model4$residuals)
-jarque.bera.test(umnk4$residuals)
 
 # Metody odporne na heteroskedastyczność ----------------------------------
-
-  #odporne błędy standardowe
-
-VCOVHC=vcovHC(model3,type="HC3")
-
-coeftest(model3)
-coeftest(model3,vcov.=VCOVHC)
 
   #WLS model 3
 
@@ -410,34 +402,4 @@ summary(wls4.1)
 
 summary
 stargazer(wls4, wls4.1, model4, column.labels = c("wls4", "wls4.1", "model2"), type = "text")
-
-# Endogeniczność ----------------------------------------------------------
-
-#model 4
-
-cor.gini = cor(DATA$gini.index,DATA$ehat2)
-cor.poll = cor(DATA$air.pollution,DATA$ehat2)
-cor.life = cor(DATA$life.expectancy,DATA$ehat2)
-cor.employ = cor(DATA$employment.industry,DATA$ehat2)
-cor.health = cor(DATA$health.expenditure,DATA$ehat2)
-
-
-Zmienna <- c("Gini Index", "Pollution", "Life expectancy", "Employment", "Health Expenditure")
-Cor_ze_skladnikiem <- c(cor.gini, cor.poll, cor.life, cor.employ, cor.health)
-
-#model 4
-
-cor.gini4 = cor(DATA$lgini.index,DATA$ehat24)
-cor.poll4 = cor(DATA$lair.pollution,DATA$ehat24)
-cor.life4 = cor(DATA$life.expectancy,DATA$ehat24)
-cor.employ4 = cor(DATA$employment.industry,DATA$ehat24)
-cor.health4 = cor(DATA$lhealth.expenditure,DATA$ehat24)
-
-Zmienna <- c("Gini Index", "Pollution", "Life expectancy", "Employment", "Health Expenditure")
-Cor_ze_skladnikiem4 <- c(cor.gini4, cor.poll4, cor.life4, cor.employ4, cor.health4)
-
-df <- data.frame(Zmienna, Cor_ze_skladnikiem)
-df4 <- data.frame(Zmienna, Cor_ze_skladnikiem4)
-print(df4)
-summary(model3)
 
