@@ -399,7 +399,5 @@ wls4.1 = lm(death.rate~ lhealth.expenditure + lgini.index + life.expectancy+empl
 summary(wls4)
 summary(wls4.1)
 
-
-summary
 stargazer(wls4, wls4.1, model4, column.labels = c("wls4", "wls4.1", "model2"), type = "text")
 
